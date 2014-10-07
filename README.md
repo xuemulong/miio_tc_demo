@@ -16,7 +16,8 @@ It's a demo for the mcu communicates with the chip of miio through text commands
     b.Import the libary files :dht.cpp and dht.h. 
     c.Download the code to the arduino mega.
 5.Example：
-    a.set RGB: rgb  [0,0,8]
+    a.set RGB:
+        rgb  [0,0,8]
         rgb value is restricted to 0~10 to avoid burned.
     b.set relay on: relay  ["on"]
         the param also can be ["off"] to set relay off.
