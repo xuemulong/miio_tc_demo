@@ -13,7 +13,7 @@ It's a demo for the mcu communicates with the chip of miio through text commands
     c.Connect arduino with the RGB leds through pin 11(R),pin 10(G),pin 9(B) and GND.
     d.Connect arduino with the relay through pin 3,3.3v and GND.
 4.Run:
-    a.Get the software for downloading the code to Arduino.  
+    a.Get the software for downloading the code to Arduino.http://arduino.cc/en/Main/Software 
     b.Import the Arduino libary files :dht.cpp and dht.h. 
     c.Download the code to the arduino mega.
 5.Example--down
@@ -23,6 +23,6 @@ It's a demo for the mcu communicates with the chip of miio through text commands
       (2)set relay on:  relay  ["on"]
         the param also can be ["off"] to set relay off.
   Example--up
-    c.the arduino will update the state of DHT11 every 100s;
-    e.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
+    b.the arduino will update the state of DHT11 every 100s;
+    c.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
 6.You can see the process of communicates on the computer if you connect Arduino with computer through UART0. 
