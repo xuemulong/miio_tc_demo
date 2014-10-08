@@ -19,13 +19,13 @@ It's a demo for the mcu communicates with the chip of miio through text commands
     c.Download the code to the arduino mega.
 ###5.Example:
 >  Example--down
-    a.the arduino will try to get down the command every 1s;
-     (1)set RGB:       rgb  [0,0,8]
+>>    a.the arduino will try to get down the command every 1s;
+>>>     (1)set RGB:       rgb  [0,0,8]
        rgb value is restricted to 0~10 to avoid burned.
-    (2)set relay on:  relay  ["on"]
+>>>    (2)set relay on:  relay  ["on"]
      the param also can be ["off"] to set relay off.
 >  Example--up
-  b.the arduino will update the state of DHT11 every 100s;
-  c.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
+>>  b.the arduino will update the state of DHT11 every 100s;
+>>  c.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
 ###6.Display：
   You can see the process of communicates on the computer if you connect Arduino with computer through UART0. 
