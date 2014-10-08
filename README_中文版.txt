@@ -1,15 +1,14 @@
 miio_tc_demo
-该项目旨在展示MCU与MIIO 芯片使用文本命令进行交互的过程。
+该demo旨在展示MCU与MIIO 芯片使用文本命令进行交互的过程。
 
 1.芯片:
 MCU芯片这里选用Arduino Mega，MIIO芯片为MIIO1.0.
+
 2.功能:
+a.该demo展示了Arduino 如何通过UART1 从MIIO芯片获取云端命令，并对RGB LEDs和Relay 进行控制
+b.该demo展示了Arduino 如何通过UART1 从MIIO芯片向云端上报传感器(比如DHT11)的状态。
 
-With the demo,we show how the arduino to get down cloud text commands from the miio chip through UART1 and to control the RGB leds and set the relay.
-
-With the demo ,we show how to update the state of sensors,for example DHT11, to the cloud by the miio chip through UART1.
-3.Connect Lines:
-
+3.连线:
 a.Connect arduino with the miio chip through UART1(pin 18 ,pin 19 and pin GND).
 
 b.Connect arduino with DHT11 through pin 4(DHT),5V and GND.
