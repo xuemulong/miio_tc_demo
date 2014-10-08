@@ -40,9 +40,9 @@ It's a demo for the mcu communicates with the chip of miio through text commands
      
 >  Example--up
 
->  b.the arduino will update the state of DHT11 every 100s;
+>  a.the arduino will update the state of DHT11 every 100s;
 
->  c.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
+>  b.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
 
 ###6.Display：
   You can see the process of communicates on the computer if you connect Arduino with computer through UART0. 
