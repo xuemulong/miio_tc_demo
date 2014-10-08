@@ -20,10 +20,10 @@ It's a demo for the mcu communicates with the chip of miio through text commands
 ###5.Example:
 >  Example--down
 >>    a.the arduino will try to get down the command every 1s;
->>>     (1)set RGB:       rgb  [0,0,8]
-       rgb value is restricted to 0~10 to avoid burned.
+>>>    (1)set RGB:       rgb  [0,0,8]
+          rgb value is restricted to 0~10 to avoid burned.
 >>>    (2)set relay on:  relay  ["on"]
-     the param also can be ["off"] to set relay off.
+          the param also can be ["off"] to set relay off.
      
 >  Example--up
 >>  b.the arduino will update the state of DHT11 every 100s;
