@@ -2,9 +2,9 @@
 */
 #include <dht.h>
 
-#define INTERNAL_TIME 50000      //about 1s
-#define INTERNAL_TIME2 500000    //about 10s
-#define INTERNAL_TIME3 5000000   //about 100s
+#define INTERNAL_TIME 50000      //try to get_down the text commands about 1s 
+#define INTERNAL_TIME2 100000    //check if temperature is too high about every 5s
+#define INTERNAL_TIME3 500000   //props temperature and huimidity timely about every 10s 
 
 #define TEMP_THRESHOLD 32
 #define HUMI_THRESHOLD 65
@@ -249,4 +249,3 @@ void setRelay(String str)
         digitalWrite(relayPin,LOW);
     }
 }
-
