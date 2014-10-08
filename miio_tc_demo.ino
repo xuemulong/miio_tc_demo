@@ -1,10 +1,8 @@
-/*
-*/
 #include <dht.h>
 
-#define INTERNAL_TIME 50000      //try to get_down the text commands about 1s 
-#define INTERNAL_TIME2 100000    //check if temperature is too high about every 5s
-#define INTERNAL_TIME3 500000   //props temperature and huimidity timely about every 10s 
+#define INTERNAL_TIME 500      //try to get_down the text commands about 1s 
+#define INTERNAL_TIME2 5000    //check if temperature is too high about every 5s
+#define INTERNAL_TIME3 10000   //props temperature and huimidity timely about every 10s 
 
 #define TEMP_THRESHOLD 32
 #define HUMI_THRESHOLD 65
@@ -23,6 +21,7 @@ dht DHT;
 //pin of relay
 int relayPin = 3;
 
+long startTime,startTime2,startTime3;
 long currentTime,currentTime2,currentTime3;
 
 void setup()
@@ -36,18 +35,21 @@ void setup()
     setColor(0,0,0);
     pinMode(relayPin,OUTPUT);
     
-    currentTime = 0;
-    currentTime2 = 0;
-    currentTime3 = 0;
+    startTime = millis();
+    currentTime = millis();
+    startTime2 = millis();
+    currentTime2 = millis();
+    startTime3 = millis();
+    currentTime3 = millis();
+    
 }
-
 void loop()
 {
     //get comand from cloud
-    currentTime++;
-    if(currentTime> INTERNAL_TIME)
+    currentTime = millis();
+    if(currentTime - startTime > INTERNAL_TIME)
     {
-        currentTime = 0;
+        startTime = currentTime;
         Serial1.println("get_down");
         Serial.println("#get_down");
         if(miioStringComplete)
@@ -57,10 +59,10 @@ void loop()
     }
 
     //event if temperature or humidity is too high
-    currentTime2++;
-    if(currentTime2 > INTERNAL_TIME2)
+    currentTime2 = millis();
+    if(currentTime2 - startTime2 > INTERNAL_TIME2)
     {
-        currentTime2 = 0;
+        startTime2 = currentTime2;
         if(eventDHT())
         {
             if(miioStringComplete)
@@ -71,10 +73,10 @@ void loop()
     }
 
     //props temperature and huimidity timely.
-    currentTime3++;
-    if(currentTime3 > INTERNAL_TIME3)
+    currentTime3 = millis();
+    if(currentTime3 - startTime3 > INTERNAL_TIME3)
     {
-        currentTime3 = 0;
+        startTime3 = currentTime3;
         propDHT();
         if(miioStringComplete)
         {
