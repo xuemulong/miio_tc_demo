@@ -1,6 +1,5 @@
 miio_tc_demo
 ============
-
 It's a demo for the mcu communicates with the chip of miio through text commands. 
 ###1.Chip:
     The mcu here we adopt is Arduino mega and the miio chip is mc200.
@@ -13,7 +12,7 @@ It's a demo for the mcu communicates with the chip of miio through text commands
     c.Connect arduino with the RGB leds through pin 11(R),pin 10(G),pin 9(B) and GND.
     d.Connect arduino with the relay through pin 3,3.3v and GND.
 ###4.Run:
-    a.Get the software for downloading the code to Arduino.http://arduino.cc/en/Main/Software 
+    a.Get the software for downloading the code to Arduino.(http://arduino.cc/en/Main/Software/). 
     b.Import the Arduino libary files :dht.cpp and dht.h. 
     c.Download the code to the arduino mega.
 ###5.Example:
