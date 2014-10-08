@@ -18,13 +18,14 @@ It's a demo for the mcu communicates with the chip of miio through text commands
     a.Get the software for downloading the code to Arduino.http://arduino.cc/en/Main/Software 
     b.Import the Arduino libary files :dht.cpp and dht.h. 
     c.Download the code to the arduino mega.
-###5.Example--down
+###5.Example:
+  >Example--down
     a.the arduino will try to get down the command every 1s;
       (1)set RGB:       rgb  [0,0,8]
          rgb value is restricted to 0~10 to avoid burned.
       (2)set relay on:  relay  ["on"]
         the param also can be ["off"] to set relay off.
-  Example--up
+  >Example--up
     b.the arduino will update the state of DHT11 every 100s;
     c.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
 ###6.Display：
