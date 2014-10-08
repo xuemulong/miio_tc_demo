@@ -44,5 +44,5 @@ It's a demo for the mcu communicates with the chip of miio through text commands
 
 >  b.the arduino will try to check the DHT every 10s to make sure if there is an event occurr.
 
-###6.Display：
+###6.Debug：
   You can see the process of communicates on the computer if you connect Arduino with computer through UART0. 
