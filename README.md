@@ -24,6 +24,7 @@ It's a demo for the mcu communicates with the chip of miio through text commands
 >    b.Import the Arduino libary files :dht.cpp and dht.h. 
 
 >    c.Download the code to the arduino mega.
+
 ###5.Example:
 >  Example--down
 
