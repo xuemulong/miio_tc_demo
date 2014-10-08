@@ -2,7 +2,7 @@ miio_tc_demo
 ============
 It's a demo for the mcu communicates with the chip of miio through text commands. 
 ###1.Chip:
->    The mcu here we adopt is Arduino mega and the miio chip is mc200.
+>    The mcu here we adopt is Arduino mega and the miio chip is miio1.0
 
 ###2.Function:
 >    With the demo,we show how the arduino to get down cloud text commands from the miio chip through UART1 and to control the RGB leds and set the relay.
