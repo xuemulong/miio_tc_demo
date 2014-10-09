@@ -1,6 +1,6 @@
 #include <dht.h>
 
-#define INTERNAL_TIME 500      //try to get_down the text commands about 1s 
+#define INTERNAL_TIME 100      //try to get_down the text commands about 100ms 
 #define INTERNAL_TIME2 5000    //check if temperature is too high about every 5s
 #define INTERNAL_TIME3 10000   //props temperature and huimidity timely about every 10s 
 
