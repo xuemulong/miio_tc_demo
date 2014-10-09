@@ -22,7 +22,7 @@ c.烧写代码：miio_tc_demo.ino.
 5.举例:
 Example--下行
 
-a.Arduino 每隔1s 去get_down 一下云端命令;
+a.Arduino 每隔100ms 去get_down 一下云端命令;
 
 (1)在云端set RGB: rgb [0,0,8]
    为避免RGB灯被烧坏，rgb的值取值范围最好在0~10

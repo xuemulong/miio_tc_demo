@@ -28,7 +28,7 @@ It's a demo for the mcu communicates with the chip of miio through text commands
 ###5.Example:
 >  Example--down
 
->    a.the arduino will try to get down the command every 1s;
+>    a.the arduino will try to get down the command every 100ms;
 
 >    (1)set RGB:       rgb  [0,0,8]
 
