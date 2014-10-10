@@ -11,7 +11,7 @@ b.该demo展示了Arduino 如何通过UART1 从MIIO芯片向云端上报传感�
 3.连线:
 a.连接Arduino与MIIO芯片： UART1(pin 18 ,pin 19 and pin GND).
 b.连接Arduino 与DHT11 ：pin 4(DHT),5V and GND.
-c.连接Arduino 与 RGB leds ：pin 11(R),pin 10(G),pin 9(B) and GND.
+c.连接Arduino 与 RGB leds ：pin 9(R),pin 10(G),pin 11(B) and GND.
 d.连接Arduino 与 Relay ：pin 3,3.3v and GND.
 
 4.运行:
