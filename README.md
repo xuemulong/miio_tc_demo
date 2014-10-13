@@ -25,7 +25,7 @@ MIIO->Arduino:down rgb 0,0,8
 
 
 
-
+####(1)下行过程示例：
 >   a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8] 
 >   b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
 >   c.Arduino 对MIIO每隔100ms发送文本命令，来获取云端命令：get_down 
