@@ -22,7 +22,7 @@ Arduino 通过UART 从MIIO芯片向云端上报Device(比如DHT11)的状态。
 MIIO<-Cloud:rgb [0,0,8]
 Arduino->MIIO:get_down
 Arduino<-MIIO:down rgb 0,0,8
-
+```
 
 
 
