@@ -24,7 +24,11 @@ Cloud->MIIO:rgb [0,0,8]
 MIIO->Arduino:down rgb 0,0,8
 ```
 
-
+```seq
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
 
 ####(1)下行过程示例：
 >   a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8] 
