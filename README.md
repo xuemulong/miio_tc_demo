@@ -18,6 +18,14 @@ Arduino 通过UART 从MIIO芯片向云端上报Device(比如DHT11)的状态。
 
 ###3.过程示例:
 > (1)下行过程示例：
+```seq
+MIIO<-Cloud:rgb [0,0,8]
+Arduino->MIIO:get_down
+Arduino<-MIIO:down rgb 0,0,8
+
+
+
+
 
 >   a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8] 
 >   b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
