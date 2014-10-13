@@ -5,13 +5,9 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
 ##2.交互过程:
 (1)下行过程如图1：
--------
 ```seq
-Arduino->MIIO:props temperature 27
-MIIO->Arduino:ok
+
 ```
--------
-图1 下行过程交互示意图
    a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8]
    b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
    c.Arduino 对MIIO每隔100ms发送文本命令，来获取云端命令：get_down 
@@ -19,7 +15,6 @@ MIIO->Arduino:ok
    e.Arduino执行命令，将RGB蓝灯点亮：set_color(0,0,8)
    f.整个过程为：Cloud->MIIO1.0->Arduino->DHT11
 (2)上行过程如图2：
-图1 下行过程交互示意图
    a.Arduino 每隔5s检测DHT11的状态(即温度和湿度) 
    b.Arduino将获取的DHT11状态，以文本命令形式通过串口传给MIIO:
      props temperature 24      props humidity 56
