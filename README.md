@@ -9,9 +9,11 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
 ###2.交互过程：
 (1)下行过程:  Cloud->MIIO->Arduino->Device
+
      Arduino 通过UART从MIIO芯片获取云端命令，并执行命令，对Device(比如RGB LEDS)进行操作。
 
 (2) 上行过程:  Device->Arduino->MIIO->Cloud
+
       Arduino 通过UART 从MIIO芯片向云端上报Device(比如DHT11)的状态。
 
 ###3.过程示例:
