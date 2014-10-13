@@ -17,7 +17,7 @@ Arduino 通过UART从MIIO芯片获取云端命令，并执行命令，对Device(
 Arduino 通过UART 从MIIO芯片向云端上报Device(比如DHT11)的状态。
 
 ###3.过程示例:
-(1)下行过程示例：
+####(1)下行过程示例：
 ```seq
 Cloud->MIIO:rgb [0,0,8]
 MIIO->Arduino:down rgb 0,0,8
