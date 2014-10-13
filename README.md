@@ -7,15 +7,23 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
 (1)下行过程描述如下：
 
-   a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8]
+   a.云端向MIIO下发命令来设置RGB: 
+    
+    rgb  [0,0,8]
 
    b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
 
-   c.Arduino 对MIIO每隔100ms发送文本命令，来获取云端命令：get_down 
+   c.Arduino 对MIIO每隔100ms发送文本命令，来获取云端命令：
+   
+    get_down 
 
-   d.Arduino获取从MIIO串口发来的rgb文本命令: down rgb 0,0,8
+   d.Arduino获取从MIIO串口发来的rgb文本命令: 
+    
+    down rgb 0,0,8
 
-   e.Arduino执行命令，将RGB蓝灯点亮：set_color(0,0,8)
+   e.Arduino执行命令，将RGB蓝灯点亮：
+    
+    set_color(0,0,8)
 
    f.整个过程为：Cloud->MIIO1.0->Arduino->DHT11
 
@@ -49,14 +57,14 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
 (2)导入库文件：dht.cpp 和 dht.h 
 
-    a.库文件下载地址：https://github.com/xuemulong/miio_tc_demo
+   a.库文件下载地址：https://github.com/xuemulong/miio_tc_demo
 
-    b.库文件导入方法：http://arduino.cc/en/Guide/Libraries)
+   b.库文件导入方法：http://arduino.cc/en/Guide/Libraries)
 
 (3)用Arduino软件烧写代码：miio_tc_demo.ino
 
-    a.烧写代码时断开Arduino与MIIO的串口连接，烧写完成后重新连接
+   a.烧写代码时断开Arduino与MIIO的串口连接，烧写完成后重新连接
 
-    b.代码下载地址：https://github.com/xuemulong/miio_tc_demo
+   b.代码下载地址：https://github.com/xuemulong/miio_tc_demo
 
 (4) MIIO 上电启动运行、快连进入网络；在云端下发命令、查看上报信息。
