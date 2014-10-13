@@ -133,11 +133,18 @@ void setRGB(String str)
     b = valueString.toInt();
 
     //set values of r,g,b
-    setColor(r,g,b);
+    if(setColor(r,g,b)){
+     Serial.println("result \"ok\""); 
+    }
+    else {
+     Serial.println("error 0"); 
+    }
 }
-void setColor(int red, int green, int blue)
+int setColor(int red, int green, int blue)
 {
     analogWrite(redPin, red);
     analogWrite(greenPin,green);
     analogWrite(bluePin, blue);
+    
+    return 1;
 }
