@@ -3,8 +3,12 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
 该demo以Arduino为例，展示了Arduino通过MIIO1.0芯片与云端进行交互的过程。
 
-##2.交互过程:(1)下行过程如图1：
-
+##2.交互过程:
+(1)下行过程如图1：
+```seq
+Arduino->MIIO:props temperature 27
+MIIO->Arduino:ok
+```
 图1 下行过程交互示意图
    a.云端向MIIO下发命令来设置RGB: rgb  [0,0,8]
    b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
