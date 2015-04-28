@@ -2,7 +2,8 @@
 
 #define INTERNAL_TIME 100      //try to get_down the text commands about 100ms 
 #define INTERNAL_TIME2 5000   //props temperature and huimidity timely about every 5s 
-
+#define INTERNAL_TIME3 3000 //if button is pressed more than 3s
+#define INTERNAL_TIME4 200 //if button is pressed more than 200ms
 //strings from MIIO
 String miioString = "";
 boolean miioStringComplete = false;
@@ -11,11 +12,17 @@ boolean miioStringComplete = false;
 int redPin = 9;
 int greenPin = 10;
 int bluePin = 11;
+int redValue = 0;
+int greenValue = 0;
+int blueValue = 0;
 //pins of DHT
 int dhtPin = 4;
 dht DHT;
+//pin of BUTTON
+int buttonPin = 7;
+int button_is_pressed = 0;
 
-long startTime,currentTime,startTime2,currentTime2;
+long startTime,currentTime,startTime2,currentTime2,startTime3,currentTime3;
 void setup()
 {
     Serial.begin(115200);
@@ -23,13 +30,13 @@ void setup()
     pinMode(redPin, OUTPUT);
     pinMode(greenPin, OUTPUT);
     pinMode(bluePin, OUTPUT);
-    setColor(0,0,0);
+    
+    pinMode(buttonPin,INPUT);
+    setColor(redValue,greenValue,blueValue);
     
     startTime = millis();
-    currentTime = millis();
-    startTime2 = millis();
-    currentTime2 = millis();
-    
+    startTime2 = millis();    
+    startTime3 = millis();
 }
 void loop()
 {
@@ -48,6 +55,25 @@ void loop()
         startTime2 = currentTime2;
         propDHT();
         if(miioStringComplete) stringsHandle();
+    }
+    
+    //report event.button_pressed or event.restore
+    currentTime3 = millis();
+    if(digitalRead(buttonPin)){
+        if(!button_is_pressed){
+          button_is_pressed = 1;
+          startTime3 = currentTime3;
+          Serial.println("event button_pressed 100"); 
+        }
+    }
+    else{
+     if(button_is_pressed){
+       button_is_pressed = 0;
+       if(currentTime3 - startTime3 > INTERNAL_TIME3){
+         Serial.println("event button_long_pressed 3000");
+       }
+     }
+     startTime3 = currentTime3; 
     }
 }
 
@@ -71,9 +97,18 @@ void serialEvent()
 //process strings from MIIO
 void stringsHandle()
 {
-    if(miioString.substring(5,8).equals("rgb"))
+    if(miioString.substring(5,12).equals("set_rgb"))
     {
-        setRGB(miioString.substring(9));
+        setRGB(miioString.substring(13));
+    }
+    else if(miioString.substring(5,12).equals("get_rgb"))
+    {
+        Serial.print("result ");
+        Serial.print(redValue,1);
+        Serial.print(",");
+        Serial.print(greenValue,1);
+        Serial.print(",");
+        Serial.println(blueValue,1);
     }
     miioString = "";
     miioStringComplete = false;
@@ -142,6 +177,9 @@ void setRGB(String str)
 }
 int setColor(int red, int green, int blue)
 {
+    redValue = red;
+    greenValue = green;
+    blueValue = blue;
     analogWrite(redPin, red);
     analogWrite(greenPin,green);
     analogWrite(bluePin, blue);
