@@ -9,7 +9,7 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
    a.云端向MIIO下发命令来设置RGB: 
     
-    rgb  [0,0,8]
+    set_rgb  [0,0,8]
 
    b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
 
@@ -19,7 +19,7 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
    d.Arduino获取从MIIO串口发来的rgb文本命令: 
     
-    down rgb 0,0,8
+    down set_rgb 0,0,8
 
    e.Arduino执行命令，将RGB蓝灯点亮：
     
@@ -50,6 +50,7 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 (3)连接Arduino 与DHT11 ：Arduino的5V ,pin 4,GND->DHT11的V,D,G
 
 (4)连接Arduino 与 RGB LEDS: Arduino的pin 9,pin 10,pin 11,GND->RGB LEDS的R,G,B,V-
+(5)连接Arduino 与 Button:pin7-->button，给予高电平表示按下
 
 ##4.烧写运行:
 
