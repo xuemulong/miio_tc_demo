@@ -9,7 +9,7 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
    a.云端向MIIO下发命令来设置RGB: 
     
-    set_rgb  [0,0,8]
+    set_rgb  [9]
 
    b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
 
@@ -19,11 +19,11 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
    d.Arduino获取从MIIO串口发来的rgb文本命令: 
     
-    down set_rgb 0,0,8
+    down set_rgb 9
 
    e.Arduino执行命令，将RGB蓝灯点亮：
     
-    set_color(0,0,8)
+    set_color(0,0,9)
 
    f.整个过程为：Cloud->MIIO1.0->Arduino->DHT11
 
