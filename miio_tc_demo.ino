@@ -2,8 +2,8 @@
 
 #define INTERNAL_TIME 100      //try to get_down the text commands about 100ms 
 #define INTERNAL_TIME2 5000   //props temperature and huimidity timely about every 5s 
-#define INTERNAL_TIME3 3000 //if button is pressed more than 3s
-#define INTERNAL_TIME4 200 //if button is pressed more than 200ms
+#define INTERNAL_TIME3 200 //if button is pressed more than this
+#define INTERNAL_TIME4 4000 //if button is pressed more than this
 //strings from MIIO
 String miioString = "";
 boolean miioStringComplete = false;
@@ -12,15 +12,16 @@ boolean miioStringComplete = false;
 int redPin = 9;
 int greenPin = 10;
 int bluePin = 11;
-int redValue = 0;
-int greenValue = 0;
-int blueValue = 0;
+long rgbValue = 0;
+
 //pins of DHT
 int dhtPin = 4;
 dht DHT;
 //pin of BUTTON
 int buttonPin = 7;
 int button_is_pressed = 0;
+int has_reported = 0;
+int has_reported_long = 0;
 
 long startTime,currentTime,startTime2,currentTime2,startTime3,currentTime3;
 void setup()
@@ -32,7 +33,7 @@ void setup()
     pinMode(bluePin, OUTPUT);
     
     pinMode(buttonPin,INPUT);
-    setColor(redValue,greenValue,blueValue);
+    setColor(0,0,0);
     
     startTime = millis();
     startTime2 = millis();    
@@ -57,22 +58,28 @@ void loop()
         if(miioStringComplete) stringsHandle();
     }
     
-    //report event.button_pressed or event.restore
+    //report event.button_pressed or event.button_long_pressed
     currentTime3 = millis();
     if(digitalRead(buttonPin)){
         if(!button_is_pressed){
           button_is_pressed = 1;
           startTime3 = currentTime3;
-          Serial.println("event button_pressed 100"); 
+          has_reported = 0;
+          has_reported_long = 0;
+        }
+        else{
+          if(currentTime3 - startTime3 > INTERNAL_TIME3  && !has_reported){
+          Serial.println("event button_pressed "); 
+          has_reported = 1;
+        }
+          if(currentTime3 - startTime3 > INTERNAL_TIME4 && !has_reported_long){
+            Serial.println("event button_long_pressed 4"); 
+            has_reported_long = 1;
+          }
         }
     }
     else{
-     if(button_is_pressed){
-       button_is_pressed = 0;
-       if(currentTime3 - startTime3 > INTERNAL_TIME3){
-         Serial.println("event button_long_pressed 3000");
-       }
-     }
+     button_is_pressed = 0;
      startTime3 = currentTime3; 
     }
 }
@@ -104,11 +111,27 @@ void stringsHandle()
     else if(miioString.substring(5,12).equals("get_rgb"))
     {
         Serial.print("result ");
-        Serial.print(redValue,1);
-        Serial.print(",");
-        Serial.print(greenValue,1);
-        Serial.print(",");
-        Serial.println(blueValue,1);
+        Serial.println(rgbValue,1);
+    }
+    else if(miioString.substring(5,20).equals("get_temperature"))
+    {
+      if(DHT.read11(dhtPin) == 0){
+        Serial.print("result ");
+        Serial.println(DHT.temperature,1);
+      }
+      else{
+        Serial.println("error \"get failed\" -5002"); 
+      }
+    }
+    else if(miioString.substring(5,17).equals("get_humidity"))
+    {
+      if(DHT.read11(dhtPin) == 0){
+        Serial.print("result ");
+        Serial.println(DHT.humidity,1);
+      }
+      else{
+        Serial.println("error \"get failed\" -5002"); 
+      }
     }
     miioString = "";
     miioStringComplete = false;
@@ -136,50 +159,23 @@ void propDHT()
 //set RGB color
 void setRGB(String str)
 {
-    String valueString = "";
-    int r = 0;
-    int g = 0;
-    int b = 0;
-
-    //get values of r,g,b
-    int len = str.length();
-    int cntComma = 0;
-    for(int i = 0; i < len; ++i)
-    {
-        if(str[i] == ',')
-        {
-            cntComma ++;
-            if(cntComma == 1)
-            {
-                r = valueString.toInt();
-                valueString = "";
-            }
-            else if(cntComma == 2)
-            {
-                g = valueString.toInt();
-                valueString = "";
-            }
-        }
-        else if(isDigit(str[i]))
-        {
-            valueString += str[i];
-        }
-    }
-    b = valueString.toInt();
-
+    long rgb = str.toInt();
+   
+    int r = (rgb >> 16) & 0xFF;
+    int g = (rgb >> 8) & 0xFF;
+    int b = rgb & 0xFF;
+   
     //set values of r,g,b
     if(setColor(r,g,b)){
+     rgbValue = rgb;
      Serial.println("result \"ok\""); 
     }
     else {
-     Serial.println("error 0"); 
+     Serial.println("error \"set failed\" -5001"); 
     }
 }
 int setColor(int red, int green, int blue)
 {
-    redValue = red;
-    greenValue = green;
-    blueValue = blue;
     analogWrite(redPin, red);
     analogWrite(greenPin,green);
     analogWrite(bluePin, blue);
