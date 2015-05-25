@@ -20,12 +20,18 @@ int dhtPin = 4;
 dht DHT;
 double tmpValue=0;
 double humValue=0;
+
 //pin of BUTTON
 int buttonPin = 7;
 int button_is_pressed = 0;
 int has_reported = 0;
 int has_reported_long = 0;
 
+//model & mcu_version sended flag
+int model_sended = 0;
+int mcu_version_sended = 0;
+
+//count timer
 long startTime,currentTime,startTime2,currentTime2,startTime3,currentTime3,startTime4,currentTime4;
 void setup()
 {
@@ -34,17 +40,41 @@ void setup()
     pinMode(redPin, OUTPUT);
     pinMode(greenPin, OUTPUT);
     pinMode(bluePin, OUTPUT);
-    
-    pinMode(buttonPin,INPUT);
     setColor(0,0,0);
     
+    //init button
+    pinMode(buttonPin,INPUT);
+   
+    //init timer    
     startTime = millis();
     startTime2 = millis();    
     startTime3 = millis();
-    startTime4 = millis();
+    startTime4 = millis(); 
 }
 void loop()
 {
+    //send model and mcu_version
+    if(model_sended < 2){//hasn't received ack
+      if(model_sended < 1){//hasn't sended
+         Serial.println("model xiaomi.demo.v1");
+         model_sended = 1;//sended
+      }
+       if(miioStringComplete) {
+         if(0 == stringsHandle()) model_sended = 2;//received ack
+         else model_sended = 0;
+      }
+    }
+    if(mcu_version_sended < 2){//hasn't received ack
+      if(mcu_version_sended < 1){//hasn't sended
+          Serial.println("mcu_version 0001");
+          mcu_version_sended = 1;//sended
+      }
+      if(miioStringComplete) {
+        if(0 == stringsHandle()) mcu_version_sended = 2; //received ack
+        else mcu_version_sended = 0;
+      }
+    }
+        
     //get comand from cloud
     currentTime = millis();
     if(currentTime - startTime > INTERNAL_TIME){
@@ -52,12 +82,14 @@ void loop()
         Serial.println("get_down");
         if(miioStringComplete) stringsHandle();
     }
+    
     //check temperature and huimidity timely.
     currentTime2 = millis();
     if(currentTime2 - startTime2 > INTERNAL_TIME2){
         startTime2 = currentTime2;
         checkDHT();
     }
+    
     //props temperature and humidity timely
     currentTime3 = millis();
     if(currentTime3 - startTime3 > INTERNAL_TIME3){
@@ -65,10 +97,11 @@ void loop()
         propDHT();
         if(miioStringComplete) stringsHandle();
     }
+    
     //report event.button_pressed or event.button_long_pressed
     currentTime4 = millis();
-    if(digitalRead(buttonPin)){
-        if(!button_is_pressed){
+    if(digitalRead(buttonPin)){//button is pressed now
+        if(!button_is_pressed){//detect button is pressed first time
           button_is_pressed = 1;
           startTime4 = currentTime4;
           has_reported = 0;
@@ -78,14 +111,14 @@ void loop()
           if(currentTime4 - startTime4 > INTERNAL_TIME4  && !has_reported){
           Serial.println("event button_pressed "); 
           has_reported = 1;
-        }
+          }
           if(currentTime4 - startTime4 > INTERNAL_TIME5 && !has_reported_long){
-            Serial.println("event button_long_pressed 4"); 
+            Serial.println("event button_long_pressed "); 
             has_reported_long = 1;
           }
-        }
+       }
     }
-    else{
+    else{//button is not pressed now
      button_is_pressed = 0;
      startTime4 = currentTime4; 
     }
@@ -109,8 +142,9 @@ void serialEvent()
     }
 }
 //process strings from MIIO
-void stringsHandle()
+int stringsHandle()
 {
+    int ret = 0;
     if(miioString.substring(5,12).equals("set_rgb"))
     {
         setRGB(miioString.substring(13));
@@ -140,8 +174,16 @@ void stringsHandle()
         Serial.println("error \"get failed\" -5002"); 
       }
     }
+    else if(miioString.substring(0,2).equals("ok")){
+        ret = 0; 
+    }
+    else if(miioString.substring(0,5).equals("error")){
+        ret =  -1; 
+    }
     miioString = "";
     miioStringComplete = false;
+    
+    return ret;
 }
 void checkDHT(){
      if(DHT.read11(dhtPin) == 0){
