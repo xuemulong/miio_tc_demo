@@ -1,10 +1,10 @@
 #include <dht.h>
 
-#define INTERNAL_TIME 100      //try to get_down the text commands about 100ms 
-#define INTERNAL_TIME2 1000   //check temperature and huimidity timely about every 1s 
-#define INTERNAL_TIME3 300000//props temperature and humidity timely every 5min
-#define INTERNAL_TIME4 200 //if button is pressed more than this
-#define INTERNAL_TIME5 4000 //if button is pressed more than this
+#define INTERNAL_GET_DOWN 100      //try to get_down the text commands about 100ms 
+#define INTERNAL_CHECK_DHT 1000   //check temperature and huimidity timely about every 1s 
+#define INTERNAL_PROP_DHT 300000//props temperature and humidity timely every 5min
+#define INTERNAL_BUTTON_PRESS 200 //if button is pressed more than this
+#define INTERNAL_BUTTON_LONG_PRESS 4000 //if button is pressed more than this
 //strings from MIIO
 String miioString = "";
 boolean miioStringComplete = false;
@@ -53,7 +53,7 @@ void setup()
 }
 void loop()
 {
-    //send model and mcu_version
+//**************send model and mcu_version**********************************************************
     if(model_sended < 2){//hasn't received ack
       if(model_sended < 1){//hasn't sended
          Serial.println("model xiaomi.demo.v1");
@@ -74,31 +74,35 @@ void loop()
         else mcu_version_sended = 0;
       }
     }
-        
-    //get comand from cloud
+//***************************************************************************************************    
+
+//****************get command from cloud**************************************************************
     currentTime = millis();
-    if(currentTime - startTime > INTERNAL_TIME){
+    if(currentTime - startTime > INTERNAL_GET_DOWN){
         startTime = currentTime;
         Serial.println("get_down");
         if(miioStringComplete) stringsHandle();
     }
-    
-    //check temperature and huimidity timely.
+//***************************************************************************************************     
+
+//********************check temperature and huimidity timely. if changed,props*************************
     currentTime2 = millis();
-    if(currentTime2 - startTime2 > INTERNAL_TIME2){
+    if(currentTime2 - startTime2 > INTERNAL_CHECK_DHT){
         startTime2 = currentTime2;
         checkDHT();
     }
-    
-    //props temperature and humidity timely
+//****************************************************************************************************    
+
+//*******************props temperature and humidity timely********************************************
     currentTime3 = millis();
-    if(currentTime3 - startTime3 > INTERNAL_TIME3){
+    if(currentTime3 - startTime3 > INTERNAL_PROP_DHT){
         startTime3 = currentTime3;
         propDHT();
         if(miioStringComplete) stringsHandle();
     }
-    
-    //report event.button_pressed or event.button_long_pressed
+//****************************************************************************************************
+
+//********************report event.button_pressed or event.button_long_pressed**********************
     currentTime4 = millis();
     if(digitalRead(buttonPin)){//button is pressed now
         if(!button_is_pressed){//detect button is pressed first time
@@ -108,11 +112,11 @@ void loop()
           has_reported_long = 0;
         }
         else{
-          if(currentTime4 - startTime4 > INTERNAL_TIME4  && !has_reported){
+          if(currentTime4 - startTime4 > INTERNAL_BUTTON_PRESS  && !has_reported){
           Serial.println("event button_pressed "); 
           has_reported = 1;
           }
-          if(currentTime4 - startTime4 > INTERNAL_TIME5 && !has_reported_long){
+          if(currentTime4 - startTime4 > INTERNAL_BUTTON_LONG_PRESS && !has_reported_long){
             Serial.println("event button_long_pressed "); 
             has_reported_long = 1;
           }
@@ -122,8 +126,8 @@ void loop()
      button_is_pressed = 0;
      startTime4 = currentTime4; 
     }
+//****************************************************************************************************
 }
-
 //get Strings from MIIO
 void serialEvent()
 {
@@ -145,7 +149,47 @@ void serialEvent()
 int stringsHandle()
 {
     int ret = 0;
-    if(miioString.substring(5,12).equals("set_rgb"))
+    if(miioString.substring(5,13).equals("get_prop"))
+    {
+      int rst = 0;
+      int index = miioString.indexOf('\"') + 1;
+      while(index){
+        if(miioString.substring(index,index + 3).equals("rgb")){
+           if(rst == 0)Serial.print("result ");
+           Serial.print(rgbValue,1);
+           Serial.print(" ");
+           rst ++;
+         }
+         
+        if(miioString.substring(index,index + 8).equals("humidity")){
+           if(humValue < 0){
+             rst = -1;
+             break;
+           }
+           if(rst == 0)Serial.print("result ");
+           Serial.print(humValue,1);
+           Serial.print(" ");
+           rst ++;
+         }
+         
+         if(miioString.substring(index,index + 11).equals("temperature")){
+           if(tmpValue < 0){
+             rst = -1;
+             break;
+           }
+           if(rst == 0)Serial.print("result ");
+           Serial.print(tmpValue,1);
+           Serial.print(" ");
+           rst ++;
+         }
+         index = miioString.indexOf('\"',index) + 1;
+         index = miioString.indexOf('\"',index) + 1;
+      } 
+      if (rst == 0)Serial.println("error \"not found\" -5003");
+      else if(rst == -1)Serial.println("error \"get failed\" -5002");
+      else Serial.println("");
+    }
+    else if(miioString.substring(5,12).equals("set_rgb"))
     {
         setRGB(miioString.substring(13));
     }
@@ -155,24 +199,14 @@ int stringsHandle()
         Serial.println(rgbValue,1);
     }
     else if(miioString.substring(5,20).equals("get_temperature"))
-    {
-      if(DHT.read11(dhtPin) == 0){
+    {      
         Serial.print("result ");
-        Serial.println(DHT.temperature,0);
-      }
-      else{
-        Serial.println("error \"get failed\" -5002"); 
-      }
+        Serial.println(tmpValue,1);
     }
     else if(miioString.substring(5,17).equals("get_humidity"))
     {
-      if(DHT.read11(dhtPin) == 0){
         Serial.print("result ");
-        Serial.println(DHT.humidity,0);
-      }
-      else{
-        Serial.println("error \"get failed\" -5002"); 
-      }
+        Serial.println(humValue,1);
     }
     else if(miioString.substring(0,2).equals("ok")){
         ret = 0; 
@@ -197,6 +231,10 @@ void checkDHT(){
             Serial.println(DHT.humidity,0);
             humValue = DHT.humidity;
           }
+      }
+      else{
+        tmpValue = -1;
+        humValue = -1;
       }
 }
 //props temperature or humidy
