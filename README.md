@@ -37,15 +37,15 @@
 
    a.云端向小米模组下发命令来设置RGB为蓝色: 
     
-    {"method":"set_rgb","params":[255],"id":1}
+    {"method":"set_rgb","params":[9],"id":1}
 
-   b.MIIO将云端发来的包含method的json串解析为文本命令，供Arduino获取
-
-   c.Arduino 对MIIO每隔100ms发送文本命令，来获取云端命令：
+   b.小米模组将云端发来的包含method的json串解析为文本命令，供Arduino通过串口获取
+   
+   c.Arduino 对小米模组通过串口每隔100ms发送文本命令，来获取转化后的云端命令：
    
     get_down 
 
-   d.Arduino获取从MIIO串口发来的rgb文本命令: 
+   d.Arduino 获取到从小米模组通过串口发来的rgb文本命令: 
     
     down set_rgb 9
 
@@ -53,7 +53,7 @@
     
     set_color(0,0,9)
 
-   f.整个过程为：Cloud->MIIO1.0->Arduino->DHT11
+   f.整个过程为：Cloud->小米模组->Arduino->RGB灯
 
 (2)上行过程描述如下：
 
@@ -61,11 +61,12 @@
 
    b.Arduino将获取的DHT11状态，以文本命令形式通过串口传给MIIO:
 
-     props temperature 24      props humidity 56
+     props temperature 24 
+     props humidity 56
 
-   c.MIIO将温度和湿度放入json串，上报云端
+   c.小米模组将温度和湿度放入json串，上报云端
 
-   d.整个过程为：DHT11->Arduino->MIIO1.0->Cloud
+   d.整个过程为：DHT11->Arduino->小米模组->Cloud
 
 ##6.硬件连线:
 这里提供了Arduino与外设及小米智能模组的连接方式，您可以研读Arduino程序并对程序进行修改。
