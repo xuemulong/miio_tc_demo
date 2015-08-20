@@ -1,10 +1,40 @@
+原文及部分资源下载地址：https://github.com/xuemulong/miio_tc_demo
+
 ##1.背景介绍：
-MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0通过WiFi与云端互联。这样MCU可以通过MIIO1.0 实现与云端的交互。
+小米开发板旨在帮助您了解小米智能硬件开放平台的开发模式，帮助您更快地进入产品开发阶段。  
 
-该demo以Arduino为例，展示了Arduino通过MIIO1.0芯片与云端进行交互的过程。
 
-##2.交互过程:
+##2.硬件框架
+开发板由一块Arduino开发板和一块嵌入了小米智能模组的配对板组成。开发前请将两块电路板通过插针连接起来  
 
+【Arduino开发板】扮演MCU的角色，提供处理能力，相当于您产品中的电路板
+![](Arduino.JPG)
+
+【配对板】包含小米智能模组，通过串口与MCU连接，负责提供WiFi等网络连接方式，与云端通信实现远程控制、手机操作等功能；同时嵌入了三个外设，包括RGB三色灯珠、一个大按钮和一个温湿度传感器
+![](MIIO.JPG)
+
+##3.烧写运行:
+拿到开发板后，您需要向Arduino开发板烧写程序，具体操作如下  
+(1) 下载固件程序（下载地址：https://github.com/xuemulong/miio_tc_demo）
+(2) 下载Arduino软件并安装 (下载地址：http://arduino.cc/en/Main/Software/).  
+(3) 导入库文件：dht.cpp 和 dht.h（库文件导入方法：http://arduino.cc/en/Guide/Libraries，详见“如何安装库>手动安装”)  
+(4) 将配对板右上角的拨码开关拨至左侧PROG，通过USB线连接Arduino板和电脑    
+(5) 打开miio_tc_demo.ino，编译后写入开发板。请注意在“工具”中选择正确的开发板类型（Arduino Uno）和正确的串口  
+(6) 将配对板右上角的拨码开关拨回右侧，回到普通工作状态，从电脑拔除开发板，完成烧写
+
+##4.设备快连:
+使用WiFi进行工作的智能设备，需要连接上路由器、并和用户建立联系后才能工作。您可以通过小米开发板来体验这个过程。  
+(1) 请首先下载小米智能家庭App（下载地址 http://home.mi.com/index.html）  
+(2) 打开小米智能家庭App，并使用您的开发者账号进行登录  
+(3) 打开小米智能家庭App，点击右上角的“加号”，并按照提示连接小米开发板  
+(4) 在完成小米开发板的快速连接后，您的设备列表中会出现一个新的设备，您就可以通过手机对开发板做一些简单操作了。
+
+##5.云端调试
+当您在开发过程中还未开发手机控制插件时，可以通过开放平台进行云端调试
+(1) 请打开小米智能硬件平台，在“开发平台>开发板管理”中，找到您绑定的开发板，并点击“调试”进入云端调试页面
+////////////////////////////////////////////////////  
+///////////////////////待修改///////////////////   
+////////////////////////////////////////////////////  
 (1)下行过程描述如下：
 
    a.云端向MIIO下发命令来设置RGB: 
@@ -39,29 +69,13 @@ MCU可以通过串口与MIIO1.0连接，使用文本命令进行交互。MIIO1.0
 
    d.整个过程为：DHT11->Arduino->MIIO1.0->Cloud
 
-注：更多详细文本命令见文档《MIIO芯片接口交互设计20140904.docx》
+##6.硬件连线:
+这里提供了Arduino与外设及小米智能模组的连接方式，您可以研读Arduino程序并对程序进行修改。
 
-##3.硬件连线:
+(1) 连接Arduino与PC：使用USB线连接(用来供电、烧写代码)  
+(2) 连接Arduino与MIIO芯片： Arduino的UART(pin 1 ,pin 0 ,pin GND)->MIIO 的UART1(UA1_RXD, UA1_TXD,GND)  
+(3) 连接Arduino 与DHT11 ：Arduino的5V ,pin 4,GND->DHT11的V,D,G  
+(4) 连接Arduino 与 RGB LEDS: Arduino的pin 9,pin 10,pin 11,GND->RGB LEDS的R,G,B,V-  
+(5) 连接Arduino 与 Button:pin7-->button，给予高电平表示按下
 
-(1)连接Arduino与PC：使用USB线连接(用来供电、烧写代码)
 
-(2)连接Arduino与MIIO芯片： Arduino的UART(pin 1 ,pin 0 ,pin GND)->MIIO 的UART1(UA1_RXD, UA1_TXD,GND)
-
-(3)连接Arduino 与DHT11 ：Arduino的5V ,pin 4,GND->DHT11的V,D,G
-
-(4)连接Arduino 与 RGB LEDS: Arduino的pin 9,pin 10,pin 11,GND->RGB LEDS的R,G,B,V-
-(5)连接Arduino 与 Button:pin7-->button，给予高电平表示按下
-
-##4.烧写运行:
-
-(1)下载Arduino软件 (下载地址：http://arduino.cc/en/Main/Software/).
-
-(2)导入库文件：dht.cpp 和 dht.h 
-
-   a.库文件导入方法：http://arduino.cc/en/Guide/Libraries)
-
-(3)用Arduino软件烧写代码：miio_tc_demo.ino
-
-   a.烧写代码时断开Arduino与MIIO的串口连接，烧写完成后重新连接
-   
-(4) MIIO 上电启动运行、快连进入网络；在云端下发命令、查看上报信息。
