@@ -1,5 +1,7 @@
 原文及部分资源下载地址：https://github.com/xuemulong/miio_tc_demo
 
+##0.Test of Github 000
+
 ##1.背景介绍：
 小米开发板旨在帮助您了解小米智能硬件开放平台的开发模式，帮助您更快地进入产品开发阶段。  
 
