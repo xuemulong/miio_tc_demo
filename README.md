@@ -6,7 +6,7 @@
 
 ##2.硬件框架
 开发板由一块Arduino开发板和一块嵌入了小米智能模组的配对板组成。开发前请将两块电路板通过插针连接起来  
-![](md_files/structureOfTheBoard.png)
+![](md_files/structureOfTheBoard.jpg)
 
 ##3.烧写运行:
 拿到开发板后，您需要向Arduino开发板烧写程序，具体操作如下  
@@ -73,7 +73,7 @@
 (5) 连接Arduino 与 Button:pin7-->button，给予高电平表示按下 
 
 当您希望对开发板的硬件进行更多拓展时，可以使用飞线连接小米模组和Arduino开发板，同时将GPIO空出以接入其他外部设备。连接方法如下：
-![](md_files/Connection.png)
+![](md_files/Connection.jpg)
 
 
 
