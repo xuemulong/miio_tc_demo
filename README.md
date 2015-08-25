@@ -6,12 +6,7 @@
 
 ##2.硬件框架
 开发板由一块Arduino开发板和一块嵌入了小米智能模组的配对板组成。开发前请将两块电路板通过插针连接起来  
-
-【Arduino开发板】扮演MCU的角色，提供处理能力，相当于您产品中的电路板
-![](Arduino.JPG)
-
-【配对板】包含小米智能模组，通过串口与MCU连接，负责提供WiFi等网络连接方式，与云端通信实现远程控制、手机操作等功能；同时嵌入了三个外设，包括RGB三色灯珠、一个大按钮和一个温湿度传感器，这三个外设可通过插针与Arduino板直接相连。
-![](MIIO.JPG)
+![](md_files/structureOfTheBoard.jpg)
 
 ##3.烧写运行:
 拿到开发板后，您需要向Arduino开发板烧写程序，具体操作如下  
@@ -68,13 +63,17 @@
 
    d.整个过程为：DHT11->Arduino->小米模组->Cloud
 
-##6.硬件连线:
+##6.硬件连线与开发拓展:
 这里提供了Arduino与外设及小米智能模组的连接方式，您可以研读Arduino程序并对程序进行修改。
 
 (1) 连接Arduino与PC：使用USB线连接(用来供电、烧写代码)  
 (2) 连接Arduino与MIIO芯片： Arduino的UART(pin 1 ,pin 0 ,pin GND)->MIIO 的UART1(UA1_RXD, UA1_TXD,GND)  
 (3) 连接Arduino 与DHT11 ：Arduino的5V ,pin 4,GND->DHT11的V,D,G  
 (4) 连接Arduino 与 RGB LEDS: Arduino的pin 9,pin 10,pin 11,GND->RGB LEDS的R,G,B,V-  
-(5) 连接Arduino 与 Button:pin7-->button，给予高电平表示按下
+(5) 连接Arduino 与 Button:pin7-->button，给予高电平表示按下 
+
+当您希望对开发板的硬件进行更多拓展时，可以使用飞线连接小米模组和Arduino开发板，同时将GPIO空出以接入其他外部设备。连接方法如下：
+![](md_files/Connection.jpg)
+
 
 
