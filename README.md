@@ -10,9 +10,15 @@
 
 ##3.烧写运行:
 拿到开发板后，您需要向Arduino开发板烧写程序，具体操作如下  
+<<<<<<< HEAD
 (1) 下载固件程序（下载地址：https://github.com/xuemulong/miio\_tc_demo )   
 (2) 下载Arduino软件并安装 (下载地址：http://arduino.cc/en/Main/Software/)  
 (3) 导入库文件：dht.cpp 和 dht.h（库文件导入方法：http://arduino.cc/en/Guide/Libraries，详见“如何安装库>手动安装”)  
+=======
+(1) 下载固件程序（下载地址：https://github.com/xuemulong/miio_tc_demo )  
+(2) 下载Arduino软件并安装 (下载地址：http://arduino.cc/en/Main/Software/)  
+(3) 导入库文件：dht.cpp 和 dht.h（库文件导入方法：http://arduino.cc/en/Guide/Libraries ，详见“如何安装库>手动安装”)  
+>>>>>>> 0f767f31f436bfb52d7dd0104e8475deef99fc81
 (4) 将配对板右上角的拨码开关拨至左侧PROG，通过USB线连接Arduino板和电脑    
 (5) 打开miio_tc_demo.ino，编译后写入开发板。请注意在“工具”中选择正确的开发板类型（Arduino Uno）和正确的串口  
 (6) 将配对板右上角的拨码开关拨回右侧，回到普通工作状态，从电脑拔除开发板，完成烧写
