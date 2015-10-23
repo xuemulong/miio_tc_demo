@@ -56,7 +56,7 @@ void loop()
 //**************send model and mcu_version**********************************************************
     if(model_sended < 2){//hasn't received ack
       if(model_sended < 1){//hasn't sended
-         Serial.println("model xiaomi.demo.v1");
+         Serial.println("model xiaomi.demo.v2");
          model_sended = 1;//sended
       }
        if(miioStringComplete) {
