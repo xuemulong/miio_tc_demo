@@ -66,7 +66,7 @@ void loop()
     }
     if(mcu_version_sended < 2){//hasn't received ack
       if(mcu_version_sended < 1){//hasn't sended
-          Serial.println("mcu_version 0001");
+          Serial.println("mcu_version 0002");
           mcu_version_sended = 1;//sended
       }
       if(miioStringComplete) {
