@@ -19,7 +19,7 @@
 
 ##4.设备快连:
 使用WiFi进行工作的智能设备，需要连接上路由器、并和用户建立联系后才能工作。您可以通过小米开发板来体验这个过程。  
-(1) 请首先下载**开发者版**小米智能家庭App（下载地址 https://raw.githubusercontent.com/MiEcosystem/XmPluginSDK/master/Smarthome.apk ）  
+(1) 请首先下载**开发者版**小米智能家庭App（下载地址 https://raw.githubusercontent.com/MiEcosystem/NewXmPluginSDK/master/SmartHome.apk ）  
 (2) 打开小米智能家庭App，并使用您的开发者账号进行登录  
 (3) 打开小米智能家庭App，点击右上角的“加号”，并按照提示连接小米开发板  
 (4) 在完成小米开发板的快速连接后，您的设备列表中会出现一个新的设备，您就可以通过手机对开发板做一些简单操作了。
