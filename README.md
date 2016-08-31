@@ -1,4 +1,5 @@
 接入米家开放平台：https://open.home.mi.com/
+
 wifi模组接入资料：https://github.com/MiEcosystem/miio_open/tree/master/wifi
 
 ##1.背景介绍：
