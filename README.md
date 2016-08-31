@@ -1,4 +1,5 @@
-原文及部分资源下载地址：https://github.com/xuemulong/miio_tc_demo
+接入米家开放平台：https://open.home.mi.com/
+wifi模组接入资料：https://github.com/MiEcosystem/miio_open/tree/master/wifi
 
 ##1.背景介绍：
 小米开发板旨在帮助您了解小米智能硬件开放平台的开发模式，帮助您更快地进入产品开发阶段。  
