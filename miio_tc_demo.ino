@@ -113,7 +113,7 @@ void loop()
         }
         else{
           if(currentTime4 - startTime4 > INTERNAL_BUTTON_PRESS  && !has_reported){
-          Serial.println("event button_pressed "); 
+          Serial.println("event button_pressed \"yellow_button\""); 
           has_reported = 1;
           }
           if(currentTime4 - startTime4 > INTERNAL_BUTTON_LONG_PRESS && !has_reported_long){
