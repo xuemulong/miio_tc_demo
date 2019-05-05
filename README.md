@@ -2,15 +2,15 @@
 
 wifi模组接入资料：https://github.com/MiEcosystem/miio_open/tree/master/wifi
 
-##1.背景介绍：
+## 1.背景介绍：
 小米开发板旨在帮助您了解小米智能硬件开放平台的开发模式，帮助您更快地进入产品开发阶段。  
 
 
-##2.硬件框架
+## 2.硬件框架
 开发板由一块Arduino开发板和一块嵌入了小米智能模组的配对板组成。开发前请将两块电路板通过插针连接起来  
 ![](md_files/structureOfTheBoard.jpg)
 
-##3.烧写运行:
+## 3.烧写运行:
 拿到开发板后，您需要向Arduino开发板烧写程序，具体操作如下  
 (1) 下载固件程序（下载地址：https://github.com/xuemulong/miio_tc_demo )  
 (2) 下载Arduino软件并安装 (下载地址：http://arduino.cc/en/Main/Software/)  
@@ -19,14 +19,14 @@ wifi模组接入资料：https://github.com/MiEcosystem/miio_open/tree/master/wi
 (5) 打开miio_tc_demo.ino，编译后写入开发板。请注意在“工具”中选择正确的开发板类型（Arduino Uno）和正确的串口  
 (6) 将配对板右上角的拨码开关拨回右侧，回到普通工作状态，从电脑拔除开发板，完成烧写
 
-##4.设备快连:
+## 4.设备快连:
 使用WiFi进行工作的智能设备，需要连接上路由器、并和用户建立联系后才能工作。您可以通过小米开发板来体验这个过程。  
 (1) 请首先下载**开发者版**小米智能家庭App（下载地址 https://raw.githubusercontent.com/MiEcosystem/NewXmPluginSDK/master/SmartHome.apk ）  
 (2) 打开小米智能家庭App，并使用您的开发者账号进行登录  
 (3) 打开小米智能家庭App，点击右上角的“加号”，并按照提示连接小米开发板  
 (4) 在完成小米开发板的快速连接后，您的设备列表中会出现一个新的设备，您就可以通过手机对开发板做一些简单操作了。
 
-##5.云端调试
+## 5.云端调试
 当您在开发过程中还未开发手机控制插件时，可以通过开放平台进行云端调试
 (1) 请打开小米智能硬件平台，在“开发平台>开发板管理”中，找到您绑定的开发板，并点击“调试”进入云端调试页面
 
@@ -65,7 +65,7 @@ wifi模组接入资料：https://github.com/MiEcosystem/miio_open/tree/master/wi
 
    d.整个过程为：DHT11->Arduino->小米模组->Cloud
 
-##6.硬件连线与开发拓展:
+## 6.硬件连线与开发拓展:
 这里提供了Arduino与外设及小米智能模组的连接方式，您可以研读Arduino程序并对程序进行修改。
 
 (1) 连接Arduino与PC：使用USB线连接(用来供电、烧写代码)  
